@@ -6,7 +6,9 @@ getIcon - Динамически вставляет изображение по�
 -->
 <template>
   <div>
+    <!-- <PROBLEMO> <PROBLEMO>  <PROBLEMO>  <PROBLEMO>  <PROBLEMO> не скрывает контент если информация отсутствует  -->
     <div v-if="!!!dailyWeather"></div>
+    <!-- <PROBLEMO/> <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>   -->
     <div v-else class="grid grid-cols-3 ">
       <div class="grid place-content-center text-center">
         <img

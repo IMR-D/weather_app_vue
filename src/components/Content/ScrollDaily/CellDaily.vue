@@ -8,7 +8,9 @@ getIcon - не работает!
 -->
 <template>
   <div>
+    <!-- <PROBLEMO> <PROBLEMO>  <PROBLEMO>  <PROBLEMO>  <PROBLEMO> не скрывает контент если информация отсутствует  -->
     <div v-if="!!!dailyWeather"></div>
+    <!-- <PROBLEMO/> <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>   -->
     <div
       v-else
       class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  ml-5 "

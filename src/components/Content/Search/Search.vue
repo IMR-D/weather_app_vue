@@ -44,6 +44,7 @@ export default {
       dailyWeather: "GET_DAILY_WEATHER",
     }),
   },
+  // <PROBLEMO> <PROBLEMO>  <PROBLEMO>  <PROBLEMO>  <PROBLEMO>
   mounted() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition((position) => {
@@ -59,7 +60,7 @@ export default {
       return console.log(
         "Разрешите доступ на получение вашего местоположения!"
       );
-    }
+    } //  <PROBLEMO/> <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>
   },
   methods: {
     ...mapActions([
