@@ -6,7 +6,7 @@ the_local_time -сторонняя бибилиотека Luxon позволяе
 -->
 
 <template>
-  <div class="text-center text-lg text-gray-700 p-4">
+  <div class="text-start text-lg text-gray-700 p-4">
     <span class="">
       {{ the_local_time() }}
     </span>

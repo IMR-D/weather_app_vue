@@ -19,7 +19,7 @@ timestamp - необходим для того, чтобы конвертиро�
       >
         <img
           class="w-8 h-8 pl-1 "
-          :src="require(`/public/img/${info.name}.svg`)"
+          :src="require(`@/assets/${info.name}.svg`)"
           :alt="info.name"
         />
         <span class="text-2xl font-semibold">
@@ -46,6 +46,7 @@ export default {
         return this.timestamp(args);
       } else return args[0];
     },
+
     timestamp(args) {
       let dataObject = new Date(args[0] * 1000).toLocaleString("en-US", {
         hour: "numeric",
