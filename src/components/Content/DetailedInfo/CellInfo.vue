@@ -19,7 +19,7 @@ timestamp - необходим для того, чтобы конвертиро�
       >
         <img
           class="w-8 h-8 pl-1 "
-          :src="require(`@/assets/${info.name}.svg`)"
+          :src="require(`/public/img/${info.name}.svg`)"
           :alt="info.name"
         />
         <span class="text-2xl font-semibold">

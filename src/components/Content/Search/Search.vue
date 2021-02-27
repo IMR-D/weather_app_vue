@@ -22,7 +22,7 @@ inputShow - отображает/скрывает поле ввода/иском
       v-else
       type="text"
       placeholder="Enter city"
-      @keyup.enter="(event) => changeCity(event.target.value)"
+      @keyup.enter="(event) => requestWeather(event.target.value)"
     />
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
       dailyWeather: "GET_DAILY_WEATHER",
     }),
   },
-  beforeCreate() {
+  mounted() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition((position) => {
         this.position = {
