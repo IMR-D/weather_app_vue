@@ -65,13 +65,7 @@ export default {
     async FETCH_DAYLI_WEATHER({ commit, state }, payload) {
       await axios
         .get(
-          "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-            payload.lat +
-            "&lon=" +
-            payload.lon +
-            "&lang=ru&appid=" +
-            state.key +
-            "&units=metric"
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=ru&appid=${state.key}&units=metric`
         )
         .then((response) => {
           commit("SET_DAILY_WEATHER", response),

@@ -17,6 +17,7 @@ inputShow - отображает/скрывает поле ввода/иском
     >
       {{ location.name }}
     </h1>
+
     <input
       class="w-full text-center rounded-r-xl"
       v-else
@@ -52,6 +53,7 @@ export default {
         };
         this.FETCH_NAME_CITY(this.position);
         this.FETCH_DAYLI_WEATHER(this.position);
+        console.log(this.location);
       });
     } else {
       return console.log(
