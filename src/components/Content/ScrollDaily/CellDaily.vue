@@ -1,23 +1,21 @@
 <!-- 
 
 Метод: 
-timestamp - timestamp - необходим для того, чтобы конвертировать из timestamp 
+timestamp -  необходим для того, чтобы конвертировать из timestamp 
 в нормальную дату числовые значения полученные из API.
 
-getIcon - не работает!
+getWeatherDaily - определяет какой контент отображать
 -->
 <template>
   <div>
-    <!-- <PROBLEMO> <PROBLEMO>  <PROBLEMO>  <PROBLEMO>  <PROBLEMO> не скрывает контент если информация отсутствует  -->
-    <div v-if="!!!dailyWeather"></div>
-    <!-- <PROBLEMO/> <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>   -->
+    <div v-if="!!!getWeatherDaily.length" />
     <div
       v-else
-      class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  ml-5 "
+      class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  pl-5 "
     >
       <div
         class=" grid grid-cols-2 place-items-center text-center w-32 mb-10 shadow-2xl rounded "
-        v-for="(value, index) in dailyWeather.daily.slice(1)"
+        v-for="(value, index) in getWeatherDaily"
         :key="index"
       >
         <img
@@ -43,14 +41,18 @@ getIcon - не работает!
 import { mapGetters } from "vuex";
 
 export default {
+  name: "CellDaily",
   computed: {
     ...mapGetters({
       dailyWeather: "GET_DAYLI_WEATHER",
     }),
+    getWeatherDaily() {
+      return this.dailyWeather.daily ? this.dailyWeather.daily.slice(1) : "";
+    },
   },
   methods: {
     getIcon(icon) {
-      return "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+      return `http://openweathermap.org/img/wn/${icon}@2x.png`;
     },
     timestamp(dt) {
       const dataObject = new Date(dt * 1000);
@@ -63,15 +65,4 @@ export default {
 };
 </script>
 
-<style>
-.wrapper {
-  display: flex;
-  overflow-x: auto;
-}
-.wrapper .item {
-  min-width: 95px;
-  height: 101px;
-  text-align: center;
-  background-color: blue;
-}
-</style>
+<style></style>

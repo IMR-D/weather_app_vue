@@ -5,24 +5,21 @@ requestWeather - запрос который делает пользовател
 в этом методе происходит поиск координат города по его названию и получение 
 погодных условий по найденным ранее координатам.
 
-inputShow - отображает/скрывает поле ввода/искомый город.
+dataGeolocation - позволяет найти город в котором находится клиент по геолокации
+
+success - выполняет действия по определению местоположения 
+error - ошибка в случае проблем с определением местоположения 
 -->
 
 <template>
   <div class="flex justify-center ">
-    <h1
-      v-if="!showCity"
-      v-on:click="inputShow"
-      class="w-full h-full text-center text-2xl text-blue-600 font-semibold p-4 bg-blue-400 bg-opacity-25 rounded-l-lg"
-    >
-      {{ location.name }}
-    </h1>
-
     <input
-      class="w-full text-center rounded-r-xl"
-      v-else
+      class="w-full text-center rounded-r-xl text-blue-700 text-3xl
+    font-bold hover:bg-blue-200 bg-blue-100 placeholder-blue-700 placeholder-opacity-50"
       type="text"
+      :value="location.name"
       placeholder="Enter city"
+      @click="location.name = null"
       @keyup.enter="(event) => requestWeather(event.target.value)"
     />
   </div>
@@ -31,10 +28,15 @@ inputShow - отображает/скрывает поле ввода/иском
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
+  name: "Search",
   data() {
     return {
-      showCity: true,
       position: {},
+      options: {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      },
     };
   },
   computed: {
@@ -44,43 +46,48 @@ export default {
       dailyWeather: "GET_DAILY_WEATHER",
     }),
   },
-  // <PROBLEMO> <PROBLEMO>  <PROBLEMO>  <PROBLEMO>  <PROBLEMO>
-  mounted() {
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition((position) => {
-        this.position = {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        };
-        this.FETCH_NAME_CITY(this.position);
-        this.FETCH_DAYLI_WEATHER(this.position);
-        console.log(this.location);
-      });
-    } else {
-      return console.log(
-        "Разрешите доступ на получение вашего местоположения!"
-      );
-    } //  <PROBLEMO/> <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>  <PROBLEMO/>
-  },
   methods: {
-    ...mapActions([
-      "FETCH_CURRENT_WEATHER",
-      "FETCH_DAYLI_WEATHER",
-      "FETCH_LAT_LON_CITY",
-      "FETCH_NAME_CITY",
-    ]),
+    ...mapActions({
+      fetchWeather: "FETCH_DAYLI_WEATHER",
+      fetchLocation: "FETCH_LAT_LON_CITY",
+      fetchNameCity: "FETCH_NAME_CITY",
+      fetchDayLength: "FETCH_DAY_LENGTH",
+    }),
     async requestWeather(newCity) {
       try {
-        this.inputShow();
-        await this.FETCH_LAT_LON_CITY(newCity);
-        await this.FETCH_DAYLI_WEATHER(this.location);
+        await this.fetchLocation(newCity);
+        await this.fetchWeather(this.location);
+        await this.fetchDayLength(this.location);
       } catch (error) {
         console.log(error);
       }
     },
-    inputShow() {
-      this.showCity = !this.showCity;
+    async dataGeolocation() {
+      try {
+        await this.fetchNameCity(this.position);
+        await this.fetchWeather(this.position);
+        await this.fetchDayLength(this.position);
+      } catch (error) {
+        console.log(error);
+      }
     },
+    async success(pos) {
+      this.position = {
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude,
+      };
+      this.dataGeolocation();
+    },
+    error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    },
+  },
+  mounted() {
+    navigator.geolocation.getCurrentPosition(
+      this.success,
+      this.error,
+      this.options
+    );
   },
 };
 </script>

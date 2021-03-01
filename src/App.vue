@@ -16,6 +16,7 @@ export default {
 
 <style scoped>
 #app {
+  font-family: Barlow;
   max-width: 664px;
   min-width: 414px;
 }

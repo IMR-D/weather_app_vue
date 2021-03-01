@@ -13,6 +13,8 @@ Action FETCH_LAT_LON_CITY - Делает запрос по имени город
 Getter GET_CURRENT_LOCATION - Получает текущие данные о городе.
 
 Mutation SET_LOCATION - Помещает данные о местоположении по введенным данным. (Название города) 
+
+Mutation CLEAR_LOCATION - очищает полученные ранее данные, при ошибочных запросах 
 */
 
 import axios from "axios";
@@ -22,14 +24,8 @@ export default {
     location: {},
     key: "5a115db62558b21cbdf8aaccddab4823",
   },
-  mutations: {
-    SET_LOCATION(state, payload) {
-      return (state.location = {
-        name: `${payload.country}, ${payload.name}`,
-        lat: payload.lat,
-        lon: payload.lon,
-      });
-    },
+  getters: {
+    GET_CURRENT_LOCATION: (state) => state.location,
   },
   actions: {
     async FETCH_LAT_LON_CITY({ commit, state }, payload) {
@@ -38,7 +34,13 @@ export default {
           `http://api.openweathermap.org/geo/1.0/direct?q=${payload}&limit=1&appid=${state.key}`
         )
         .then((response) => commit("SET_LOCATION", ...response.data))
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.error(
+            "Название с таким город не существует, либо отсутствует в базе.",
+            error
+          );
+          commit("CLEAR_LOCATION");
+        });
     },
 
     async FETCH_NAME_CITY({ commit, state }, payload) {
@@ -46,11 +48,25 @@ export default {
         .get(
           `http://api.openweathermap.org/geo/1.0/reverse?lat=${payload.lat}&lon=${payload.lon}&limit=1&appid=${state.key}`
         )
-        .then((response) => commit("SET_LOCATION", response.data))
-        .catch((error) => console.log(error));
+        .then((response) => commit("SET_LOCATION", response.data[0]))
+        .catch((error) =>
+          console.error(
+            "Поиск по координатам невозможен, из-за неверных данных.",
+            error
+          )
+        );
     },
   },
-  getters: {
-    GET_CURRENT_LOCATION: (state) => state.location,
+  mutations: {
+    SET_LOCATION(state, payload) {
+      state.location = {
+        name: `${payload.country}, ${payload.name}`,
+        lat: payload.lat,
+        lon: payload.lon,
+      };
+    },
+    CLEAR_LOCATION(state) {
+      state.location = {};
+    },
   },
 };
