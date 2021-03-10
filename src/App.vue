@@ -16,8 +16,8 @@ export default {
 
 <style scoped>
 #app {
-  font-family: Barlow;
-  max-width: 664px;
-  min-width: 414px;
+  font-family: 'Barlow', sans-serif;
+  width: 375px;
+  height: 812px;
 }
 </style>

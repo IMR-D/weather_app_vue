@@ -15,22 +15,22 @@ getCurrentWeather - по нему определяем отображать ко
 <template>
   <div>
     <div v-if="!!!getCurrentWeather" />
-    <div v-else class="grid grid-cols-3 text-center gap-10 pt-8 pb-8 ">
+    <div v-else class="grid grid-cols-3 text-center  gap-y-8 mt-6 ">
       <div
         class=" grid  place-items-center "
         v-for="(info, index) in currentWeatherSelecttve"
         :key="index"
       >
         <img
-          class="w-8 h-8 pl-1 "
+          class="w-6 h-6 m-2"
           :src="setImagePath(info.name)"
           :alt="info.name"
         />
-        <span class="text-2xl font-semibold">
+        <span class="text-base font-medium">
           {{ filterValue({ value: info.value, info: info.name })
           }}{{ info.measurement }}
         </span>
-        <span class="text-gray-700 text-lg ">{{ info.name }}</span>
+        <span class="text-gray-700 text_desc font-medium">{{ info.name }}</span>
       </div>
     </div>
   </div>
@@ -67,10 +67,16 @@ export default {
           minute: "numeric",
         });
     },
-
     setImagePath(imageName) {
-      return imageName ? require(`@/assets/${imageName}.svg`) : "";
+      return imageName ? require(`@/assets/img/day/${imageName}.svg`) : "";
     },
   },
 };
 </script>
+
+<style scoped>
+.text_desc{
+  font-size: 8px;
+}
+
+</style>

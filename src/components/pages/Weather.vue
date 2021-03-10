@@ -1,17 +1,17 @@
 <template>
   <div class="relative">
     <div>
-      <ThemeNight class="col-span-3 " v-if="nowTime == 'AM'" />
+      <ThemeNight class="col-span-3 " v-if="localTime.time_of_day === 'AM'" />
       <ThemeDay class="col-span-3" v-else />
     </div>
-    <div class="grid grid-cols-3 gap-4 shadow-2xl pos">
-      <LocalTime class="col-span-1 " />
-      <Search class="col-span-2 " />
-      <MainInfo class="col-span-3" />
-      <DetailedInfo class="col-span-3">
+    <div class="grid grid-cols-6  shadow-2xl pos">
+      <LocalTime class="col-span-3 " />
+      <Search class="col-span-3 " />
+      <MainInfo class="col-span-6" />
+      <DetailedInfo class="col-span-6">
         <CellInfo />
       </DetailedInfo>
-      <ScrollDaily class="col-span-3">
+      <ScrollDaily class="col-span-6">
         <CellDaily />
       </ScrollDaily>
     </div>
@@ -28,7 +28,6 @@ import ScrollDaily from "../Content/ScrollDaily/ScrollDaily";
 import CellDaily from "../Content/ScrollDaily/CellDaily";
 import ThemeDay from "../Backgrounds/ThemeDay";
 import ThemeNight from "../Backgrounds/ThemeNight";
-import { DateTime, Settings } from "luxon";
 import { mapGetters } from "vuex";
 export default {
   components: {
@@ -44,13 +43,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      dailyWheather: "GET_DAYLI_WEATHER",
+      localTime: "GET_LOCAL_TIME",
     }),
-    nowTime() {
-      Settings.defaultZoneName = this.dailyWheather.timezone;
-      const start = DateTime.local();
-      return start.toFormat("a").toString();
-    },
   },
 };
 </script>
@@ -59,9 +53,9 @@ export default {
   position: absolute;
   background-color: white;
   border-radius: 25px;
-  top: 320px;
+  top: 279px;
 }
-
+/*
 @media (max-width: 640px) and (min-width: 320px) {
   .pos {
     top: 300px;
@@ -76,5 +70,5 @@ export default {
   .pos {
     top: 520px;
   }
-}
+}*/
 </style>

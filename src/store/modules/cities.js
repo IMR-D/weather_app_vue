@@ -18,7 +18,7 @@ Mutation CLEAR_LOCATION - очищает полученные ранее дан�
 */
 
 import axios from "axios";
-
+import country from 'country-list-js';
 export default {
   state: {
     location: {},
@@ -59,8 +59,9 @@ export default {
   },
   mutations: {
     SET_LOCATION(state, payload) {
+      const ctr = country.findByIso2(payload.country);
       state.location = {
-        name: `${payload.country}, ${payload.name}`,
+        name: `${payload.name}, ${ctr.name}`,
         lat: payload.lat,
         lon: payload.lon,
       };

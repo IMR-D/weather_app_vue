@@ -14,23 +14,23 @@ getWeatherDaily - определяет какой контент отображ�
       class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  pl-5 "
     >
       <div
-        class=" grid grid-cols-2 place-items-center text-center w-32 mb-10 shadow-2xl rounded "
+        class=" w-24 h-28 grid grid-cols-2 place-items-center  mt-5 mb-10 shadow-2xl rounded-2xl p-3"
         v-for="(value, index) in getWeatherDaily"
         :key="index"
       >
         <img
-          :src="getIcon(value.weather[0].icon)"
+          :src="setImagePath(value.weather[0].description)"
           alt="description"
-          class="w-15 h-15 col-span-2  "
+          class="w-15 h-15 col-span-2 m-2 "
         />
-        <span class="col-span-2 text-xl font-semibold -mt-5">
+        <span class="col-span-2 text-base font-medium  ">
           {{ timestamp(value.dt) }}
         </span>
-        <span class=" text-xs text-gray-700">
-          {{ value.temp.max }}&#8451; &#8593;
+        <span class="  textColor  place-self-end mr-1 ">
+          {{ Math.round(value.temp.max) }}&#8451;&#8593;
         </span>
-        <span class=" text-xs text-gray-700">
-          {{ value.temp.min }}&#8451; &#8595;
+        <span class=" textColor  place-self-start ml-1 ">
+          {{ Math.round(value.temp.min) }}&#8451;&#8595;
         </span>
       </div>
     </div>
@@ -51,18 +51,26 @@ export default {
     },
   },
   methods: {
-    getIcon(icon) {
-      return `http://openweathermap.org/img/wn/${icon}@2x.png`;
+    setImagePath(imageName) {
+      imageName = imageName.toLowerCase().replace(" ",'_');
+      return imageName ? require(`@/assets/img/day/${imageName}.svg`) : "";
     },
     timestamp(dt) {
       const dataObject = new Date(dt * 1000);
-      return dataObject.toLocaleString("en-US", {
+      const str = dataObject.toLocaleString("en-US", {
         weekday: "short",
         day: "numeric",
       });
+      return str.split(" ").reverse().join(',');
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.textColor{
+  font-size: 8px;
+  color: rgba(153, 153, 153, 1);
+}
+
+</style>

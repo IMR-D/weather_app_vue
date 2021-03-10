@@ -30,7 +30,7 @@ export default {
     async FETCH_DAYLI_WEATHER({ commit, state }, payload) {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=ru&appid=${state.key}&units=metric`
+          `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=en&appid=${state.key}&units=metric`
         )
         .then((response) => {
           commit("SET_DAILY_WEATHER", response);
@@ -71,27 +71,27 @@ export default {
     SET_CURRENT_WEATHER_SELECTIVE(state, payload) {
       return (state.currentWeatherSelective = [
         {
-          name: "Humidity",
+          name: "humidity",
           value: payload.data.current.humidity,
           measurement: "%",
         },
         {
-          name: "Pressure",
+          name: "pressure",
           value: payload.data.current.pressure,
           measurement: "mBar",
         },
         {
-          name: "Wind",
+          name: "wind",
           value: payload.data.current.wind_speed,
           measurement: "km/h",
         },
         {
-          name: "Sunrise",
+          name: "sunrise",
           value: payload.data.current.sunrise,
           measurement: "",
         },
         {
-          name: "Sunset",
+          name: "sunset",
           value: payload.data.current.sunset,
           measurement: "",
         },
