@@ -14,8 +14,8 @@ getCurrentTempMin- получает текующую погоду минимал
 
 <template>
   <div>
-    <div v-if="!!!getCurrentWeather">
-      <div class="lds-dual-ring"></div>
+    <div class="grid grid-col-3" v-if="!!!getCurrentWeather">
+      <div class="lds-dual-ring col-start-2 "></div>
       <!--<span
         class="grid place-content-center text-center text-blue-800 text-2xl p-8 bg-red-200 antialiased  "
       >
@@ -31,7 +31,7 @@ getCurrentTempMin- получает текующую погоду минимал
         <img
           :src="setImagePath(getCurrentWeather.description)"
           alt="description"
-          class=" w-10 h-10 ml-2"
+          class=" w-10 h-10 "
         />
         <p class="text-lg font-medium justify-center   ">
           {{ getCurrentWeather.main }}
@@ -109,6 +109,7 @@ export default {
   display: inline-block;
   width: 80px;
   height: 80px;
+
 }
 .lds-dual-ring:after {
   content: " ";
