@@ -20,5 +20,10 @@ export default {
   min-width: 375px;
   max-width: 777px;
   max-height: 812px;
+  margin: 0px auto;
+}
+body{
+  margin:0px;
+  padding:0px;
 }
 </style>

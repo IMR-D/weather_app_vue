@@ -130,10 +130,7 @@ export default {
     transform: rotate(360deg);
   }
 }
-.arrow{
-  font-size: 9px;
-color: black;
-}
+
 .сelsius {
   font-size: 24px;
   align-self: center;

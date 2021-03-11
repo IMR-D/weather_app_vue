@@ -60,7 +60,7 @@ export default {
 
 @media (max-width: 500px) and (min-width: 360px) {
   .pos {
-    top: 300px;
+    top: 290px;
   }
 }
 @media (max-width: 640px) and (min-width: 501px) {
