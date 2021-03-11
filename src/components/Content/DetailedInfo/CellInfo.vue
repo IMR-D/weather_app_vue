@@ -46,7 +46,7 @@ export default {
       dailyWheather: "GET_DAYLI_WEATHER",
     }),
     getCurrentWeather() {
-      return this.currentWeatherSelecttve ? true : false;
+      return this.dailyWheather.current ? true : false;
     },
   },
   methods: {

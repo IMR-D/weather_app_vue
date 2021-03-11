@@ -14,7 +14,7 @@ getCurrentTempMin- получает текующую погоду минимал
 
 <template>
   <div>
-    <div v-if="!currentWeather" class="grid grid-col-3">
+    <div v-if="!getCurrentWeather" class="grid grid-col-3">
       <div class="lds-dual-ring col-start-2 "/>
 
     </div>
@@ -62,22 +62,22 @@ export default {
     getCurrentWeather() {
       return this.currentWeather.current
           ? this.currentWeather.current.weather[0]
-          : null;
+          : false;
     },
     getCurrentTemp() {
       return this.currentWeather.current
           ? Math.round(this.currentWeather.current.temp)
-          : null;
+          : false;
     },
     getCurrentTempMax() {
       return this.currentWeather.current
           ? Math.round(this.currentWeather.daily[0].temp.max)
-          : null;
+          : false;
     },
     getCurrentTempMin() {
       return this.currentWeather.current
           ? Math.round(this.currentWeather.daily[0].temp.min)
-          : null;
+          : false;
     },
   },
 
