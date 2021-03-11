@@ -1,10 +1,10 @@
 <template>
-  <div class="relative">
+  <div class="grid grid-cols-1  relative">
     <div>
       <ThemeNight class="col-span-3 " v-if="localTime.time_of_day === 'AM'" />
       <ThemeDay class="col-span-3" v-else />
     </div>
-    <div class="grid grid-cols-6  shadow-2xl pos">
+    <div class="grid grid-cols-6  myShadow rounded-t-3xl pos">
       <LocalTime class="col-span-3 " />
       <Search class="col-span-3 " />
       <MainInfo class="col-span-6" />
@@ -52,23 +52,30 @@ export default {
 .pos {
   position: absolute;
   background-color: white;
-  border-radius: 25px;
   top: 279px;
 }
-/*
-@media (max-width: 640px) and (min-width: 320px) {
+.myShadow{
+  box-shadow: 0px -16px 40px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 500px) and (min-width: 360px) {
   .pos {
     top: 300px;
   }
 }
+@media (max-width: 640px) and (min-width: 501px) {
+  .pos {
+    top: 400px;
+  }
+}
 @media (max-width: 1024px) and (min-width: 640px) {
   .pos {
-    top: 520px;
+    top: 500px;
   }
 }
 @media (max-width: 1960px) and (min-width: 1024px) {
   .pos {
     top: 520px;
   }
-}*/
+}
 </style>

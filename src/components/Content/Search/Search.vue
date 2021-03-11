@@ -12,17 +12,17 @@ error - ошибка в случае проблем с определением 
 -->
 
 <template>
-  <div class="flex bg-opacity-75 rounded-bl-3xl justify-start bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
+  <div class="flex bg-opacity-75 rounded-bl-3xl justify-center bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
     <input
-      class=" ml-1 text-center rounded-bl-3xl border-0 bg-blue-100 hover:bg-blue-200 w-40 truncate textColor text-center  text-blue-700 text-base
-   font-medium bg-opacity-0 placeholder-blue-700 placeholder-opacity-50"
+      class="ml-6 text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate textColor text-center  text-blue-700 text-base
+   font-medium bg-opacity-0 placeholder-blue-400 placeholder-opacity-50"
       type="text"
       :value="location.name"
       placeholder="Enter city"
       @click="location.name = null"
       @keyup.enter="(event) => requestWeather(event.target.value)"
     />
-    <img class="myPostition" src="@/assets/img/location.svg" alt="location"/>
+    <img @click="getLocation" class="cursor-pointer p-4  " src="@/assets/img/location.svg" alt="location"/>
   </div>
 </template>
 
@@ -61,7 +61,6 @@ export default {
         await this.fetchWeather(this.location);
         await this.fetchLocalTime(this.dailyWeather.timezone);
         await this.fetchDayLength(this.location);
-        console.log(this.location);
       } catch (error) {
         console.log(error);
       }
@@ -72,7 +71,6 @@ export default {
         await this.fetchWeather(this.position);
         await this.fetchLocalTime(this.dailyWeather.timezone);
         await this.fetchDayLength(this.position);
-        console.log(this.location);
       } catch (error) {
         console.log(error);
       }
@@ -87,6 +85,13 @@ export default {
     error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     },
+    getLocation(){
+      navigator.geolocation.getCurrentPosition(
+          this.success,
+          this.error,
+          this.options
+      );
+    }
   },
   mounted() {
     navigator.geolocation.getCurrentPosition(
@@ -103,13 +108,6 @@ export default {
   color:rgba(13, 160, 234, 1);
   outline:none;
 
-}
-
-.myPostition{
-  position: absolute;
-  right: 3%;
-  top: 3.5%;
-  bottom: 0%;
 }
 
 </style>

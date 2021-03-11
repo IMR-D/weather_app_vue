@@ -14,7 +14,7 @@ getWeatherDaily - определяет какой контент отображ�
       class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  pl-5 "
     >
       <div
-        class=" w-24 h-28 grid grid-cols-2 place-items-center  mt-5 mb-10 shadow-2xl rounded-2xl p-3"
+        class=" myShadow w-24 h-28 grid grid-cols-2 place-items-center  mt-5 mb-10  rounded-2xl p-3"
         v-for="(value, index) in getWeatherDaily"
         :key="index"
       >
@@ -23,14 +23,14 @@ getWeatherDaily - определяет какой контент отображ�
           alt="description"
           class="w-15 h-15 col-span-2 m-2 "
         />
-        <span class="col-span-2 text-base font-medium  ">
+        <span class="col-span-2 text-base font-bold  ">
           {{ timestamp(value.dt) }}
         </span>
         <span class="  textColor  place-self-end mr-1 ">
-          {{ Math.round(value.temp.max) }}&#8451;&#8593;
+          {{ Math.round(value.temp.max) }}&#xb0;C &#8593;
         </span>
         <span class=" textColor  place-self-start ml-1 ">
-          {{ Math.round(value.temp.min) }}&#8451;&#8595;
+          {{ Math.round(value.temp.min) }}&#xb0;C &#8595;
         </span>
       </div>
     </div>
@@ -71,6 +71,9 @@ export default {
 .textColor{
   font-size: 8px;
   color: rgba(153, 153, 153, 1);
+}
+.myShadow{
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 </style>

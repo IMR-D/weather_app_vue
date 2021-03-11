@@ -17,89 +17,89 @@ Mutation CLEAR_WEATHER - очищает полученные ранее данн
 import axios from "axios";
 
 export default {
-  state: {
-    currentWeatherSelective: [{}],
-    dayliWeather: {},
-    key: "3a58dc3293b0300059e35bfce7c162e7",
-  },
-  getters: {
-    GET_CURRENT_WEATHER_SELECTIVE: (state) => state.currentWeatherSelective,
-    GET_DAYLI_WEATHER: (state) => state.dayliWeather,
-  },
-  actions: {
-    async FETCH_DAYLI_WEATHER({ commit, state }, payload) {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=en&appid=${state.key}&units=metric`
-        )
-        .then((response) => {
-          commit("SET_DAILY_WEATHER", response);
-          commit("SET_CURRENT_WEATHER_SELECTIVE", response);
-        })
-        .catch((error) => {
-          console.error(
-            "Не удалось найти город по полученным координатам",
-            error
-          );
-          commit("CLEAR_WEATHER");
-        });
+    state: {
+        currentWeatherSelective: [{}],
+        dayliWeather: {},
+        key: "3a58dc3293b0300059e35bfce7c162e7",
     },
-    async FETCH_DAY_LENGTH({ commit }, payload) {
-      await axios
-        .get(
-          `https://api.sunrise-sunset.org/json?lat=${payload.lat}&lng=${payload.lon}&date=today`
-        )
-        .then((response) => {
-          commit("SET_DAY_LENGTH", response.data.results);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    getters: {
+        GET_CURRENT_WEATHER_SELECTIVE: (state) => state.currentWeatherSelective,
+        GET_DAYLI_WEATHER: (state) => state.dayliWeather,
     },
-  },
-  mutations: {
-    SET_DAY_LENGTH(state, payload) {
-      return state.currentWeatherSelective.push({
-        name: "Daytime",
-        value: payload.day_length,
-        measurement: "",
-      });
-    },
-    SET_DAILY_WEATHER(state, payload) {
-      return (state.dayliWeather = payload.data);
-    },
-    SET_CURRENT_WEATHER_SELECTIVE(state, payload) {
-      return (state.currentWeatherSelective = [
-        {
-          name: "humidity",
-          value: payload.data.current.humidity,
-          measurement: "%",
+    actions: {
+        async FETCH_DAYLI_WEATHER({commit, state}, payload) {
+            await axios
+                .get(
+                    `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=en&appid=${state.key}&units=metric`
+                )
+                .then((response) => {
+                    commit("SET_DAILY_WEATHER", response);
+                    commit("SET_CURRENT_WEATHER_SELECTIVE", response);
+                })
+                .catch((error) => {
+                    console.error(
+                        "Не удалось найти город по полученным координатам",
+                        error
+                    );
+                    commit("CLEAR_WEATHER");
+                });
         },
-        {
-          name: "pressure",
-          value: payload.data.current.pressure,
-          measurement: "mBar",
+        async FETCH_DAY_LENGTH({commit}, payload) {
+            await axios
+                .get(
+                    `https://api.sunrise-sunset.org/json?lat=${payload.lat}&lng=${payload.lon}&date=today`
+                )
+                .then((response) => {
+                    commit("SET_DAY_LENGTH", response.data.results);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
-        {
-          name: "wind",
-          value: payload.data.current.wind_speed,
-          measurement: "km/h",
-        },
-        {
-          name: "sunrise",
-          value: payload.data.current.sunrise,
-          measurement: "",
-        },
-        {
-          name: "sunset",
-          value: payload.data.current.sunset,
-          measurement: "",
-        },
-      ]);
     },
-    CLEAR_WEATHER(state) {
-      state.dayliWeather = {};
-      state.currentWeatherSelective = [{}];
+    mutations: {
+        SET_DAY_LENGTH(state, payload) {
+            return state.currentWeatherSelective.push({
+                name: "Daytime",
+                value: payload.day_length,
+                measurement: "",
+            });
+        },
+        SET_DAILY_WEATHER(state, payload) {
+            return (state.dayliWeather = payload.data);
+        },
+        SET_CURRENT_WEATHER_SELECTIVE(state, payload) {
+            return (state.currentWeatherSelective = [
+                {
+                    name: "Humidity",
+                    value: payload.data.current.humidity,
+                    measurement: "%",
+                },
+                {
+                    name: "Pressure",
+                    value: payload.data.current.pressure,
+                    measurement: "mBar",
+                },
+                {
+                    name: "Wind",
+                    value: payload.data.current.wind_speed,
+                    measurement: "km/h",
+                },
+                {
+                    name: "Sunrise",
+                    value: payload.data.current.sunrise,
+                    measurement: "",
+                },
+                {
+                    name: "Sunset",
+                    value: payload.data.current.sunset,
+                    measurement: "",
+                },
+            ]);
+        },
+        CLEAR_WEATHER(state) {
+            state.dayliWeather = {};
+            state.currentWeatherSelective = [{}];
+        },
     },
-  },
 };

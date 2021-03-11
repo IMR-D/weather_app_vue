@@ -26,7 +26,7 @@ getCurrentWeather - по нему определяем отображать ко
           :src="setImagePath(info.name)"
           :alt="info.name"
         />
-        <span class="text-base font-medium">
+        <span class="text-base font-bold">
           {{ filterValue({ value: info.value, info: info.name })
           }}{{ info.measurement }}
         </span>

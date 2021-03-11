@@ -6,7 +6,7 @@ the_local_time -сторонняя бибилиотека Luxon позволяе
 -->
 
 <template>
-  <div class="textColor text-start text-sm  p-3 font-normal">
+  <div class="textColor text-start text-sm  p-4 pl-6 font-normal">
     <span>
       {{ localTime.full_time }}
     </span>

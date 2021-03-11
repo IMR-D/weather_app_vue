@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <Weather />
   </div>
 </template>
@@ -17,7 +17,8 @@ export default {
 <style scoped>
 #app {
   font-family: 'Barlow', sans-serif;
-  width: 375px;
-  height: 812px;
+  min-width: 375px;
+  max-width: 777px;
+  max-height: 812px;
 }
 </style>

@@ -8,8 +8,8 @@ export default {
         GET_LOCAL_TIME: (state) => state.local_time,
     },
     actions: {
-         FETCH_LOCAL_TIME({ commit }, payload) {
-             commit("SET_LOCAL_TIME", payload);
+        FETCH_LOCAL_TIME({commit}, payload) {
+            commit("SET_LOCAL_TIME", payload);
         },
     },
     mutations: {
@@ -17,8 +17,8 @@ export default {
             Settings.defaultZoneName = payload;
             const start = DateTime.local();
             return state.local_time = {
+                full_time: start.toFormat("cccc, dd LLL yyyy hh:mma").toString(),
                 time_of_day: start.toFormat("a").toString(),
-                full_time: start.toFormat("cccc, dd LLL yyyy hh:mm a").toString(),
             }
         },
     },
