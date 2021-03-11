@@ -23,15 +23,24 @@ getWeatherDaily - определяет какой контент отображ�
           alt="description"
           class="w-15 h-15 col-span-2 m-2 "
         />
+
         <span class="col-span-2 text-base font-bold  ">
           {{ timestamp(value.dt) }}
         </span>
-        <span class="  textColor  place-self-end mr-1 ">
-          {{ Math.round(value.temp.max) }}&#xb0;C &#8593;
+
+      <div class="flex items-stretch place-self-end mr-1 self-start">
+        <span class="textColor ">
+          {{ Math.round(value.temp.max) }}&#xb0;C
         </span>
-        <span class=" textColor  place-self-start ml-1 ">
-          {{ Math.round(value.temp.min) }}&#xb0;C &#8595;
-        </span>
+        <img class="inline p_temp_arrow" src="@/assets/img/arrow_up.svg" alt="arrow"/>
+      </div>
+        <div class="flex items-stretch place-self-start ml-1 self-start">
+          <span class="textColor">
+          {{ Math.round(value.temp.min) }}&#xb0;C
+          </span>
+          <img class="inline p_temp_arrow" src="@/assets/img/arrow_down.svg" alt="arrow"/>
+        </div>
+
       </div>
     </div>
   </div>
@@ -75,5 +84,7 @@ export default {
 .myShadow{
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
 }
-
+.p_temp_arrow{
+  padding-left: 0.125rem;
+}
 </style>

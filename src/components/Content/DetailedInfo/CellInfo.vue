@@ -51,17 +51,21 @@ export default {
   },
   methods: {
     filterValue({ value, info }) {
-      if (value && value.toString().length >= 5) {
+      if (info == "Pressure") {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      else if (value && value.toString().length >= 5) {
         return this.timestamp({ value, info });
       } else return value;
     },
 
     timestamp({ value, info }) {
       //Приводим время к виду 11h 21m (Example)
-      if (info == "Daytime") {
+       if (info == "Daytime") {
         value = value.split(":").slice(0, 2);
         return `${value[0]}h ${value[1]}m `;
-      } else
+      }
+      else
         return new Date(value * 1000).toLocaleString("en-US", {
           hour: "numeric",
           minute: "numeric",

@@ -15,7 +15,7 @@ error - ошибка в случае проблем с определением 
   <div class="flex bg-opacity-75 rounded-bl-3xl justify-center bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
     <input
       class="ml-6 text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate textColor text-center  text-blue-700 text-base
-   font-medium bg-opacity-0 placeholder-blue-400 placeholder-opacity-50"
+    bg-opacity-0 placeholder-blue-400 placeholder-opacity-50"
       type="text"
       :value="location.name"
       placeholder="Enter city"
@@ -107,7 +107,7 @@ export default {
 .textColor{
   color:rgba(13, 160, 234, 1);
   outline:none;
-
+  font-weight: 600;
 }
 
 </style>

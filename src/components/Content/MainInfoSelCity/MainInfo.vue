@@ -31,12 +31,12 @@ getCurrentTempMin- получает текующую погоду минимал
       </div>
       <span class="flex text-6xl font-thin place-self-center ">
         {{ getCurrentTemp }}
-        <sup class="сelsius">
+        <sup class="сelsius font-bold ">
           &#xb0;C
         </sup>
       </span>
       <div class=" textColor grid place-content-center text-base text-right ">
-        <div>
+        <div class="mb-1">
           <span> {{ getCurrentTempMax }}&#xb0;C </span>
          <img class="inline mb-2 " src="@/assets/img/arrow_up.svg" alt="arrow"/>
         </div>
@@ -94,6 +94,7 @@ export default {
 
     },
   },
+
 };
 </script>
 

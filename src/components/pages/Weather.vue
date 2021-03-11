@@ -4,7 +4,7 @@
       <ThemeNight class="col-span-3 " v-if="localTime.time_of_day === 'AM'" />
       <ThemeDay class="col-span-3" v-else />
     </div>
-    <div class="grid grid-cols-6  myShadow rounded-t-3xl pos">
+    <div class="grid grid-cols-6 myShadow rounded-t-3xl pos">
       <LocalTime class="col-span-3 " />
       <Search class="col-span-3 " />
       <MainInfo class="col-span-6" />
