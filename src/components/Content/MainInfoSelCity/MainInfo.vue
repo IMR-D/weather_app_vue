@@ -14,19 +14,11 @@ getCurrentTempMin- получает текующую погоду минимал
 
 <template>
   <div>
-    <div v-if="!!!getCurrentWeather" class="grid grid-col-3">
-      <div class="lds-dual-ring col-start-2 "></div>
-      <!--<span
-        class="grid place-content-center text-center text-blue-800 text-2xl p-8 bg-red-200 antialiased  "
-      >
-        Приносим свои извинения, но информация о погоде в текущем городе
-        отсутствует или ваше местоположение не определено.
-        <br />
-        Проверьте правильность введенного города и повторите поиск или подождите
-        несколько секунд пока ваше местоположение не определится.
-      </span>-->
+    <div v-if="!currentWeather" class="grid grid-col-3">
+      <div class="lds-dual-ring col-start-2 "/>
+
     </div>
-    <div v-else class="grid grid-cols-3 ">
+    <div  v-else class="grid grid-cols-3 ">
       <div class="grid  place-content-center justify-center text-center  ">
         <img
             :src="setImagePath(getCurrentWeather.description)"
@@ -43,8 +35,6 @@ getCurrentTempMin- получает текующую погоду минимал
           &#xb0;C
         </sup>
       </span>
-
-
       <div class=" textColor grid place-content-center text-base text-right ">
         <div>
           <span> {{ getCurrentTempMax }}&#xb0;C </span>
@@ -54,7 +44,6 @@ getCurrentTempMin- получает текующую погоду минимал
           <span> {{ getCurrentTempMin }}&#xb0;C </span>
           <img class="inline" src="@/assets/img/arrow_down.svg" alt="arrow"/>
         </div>
-
       </div>
     </div>
   </div>

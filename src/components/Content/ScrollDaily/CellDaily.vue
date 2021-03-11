@@ -8,7 +8,7 @@ getWeatherDaily - определяет какой контент отображ�
 -->
 <template>
   <div>
-    <div v-if="!!!getWeatherDaily.length" />
+    <div v-if="!dailyWeather" />
     <div
       v-else
       class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  pl-5 "

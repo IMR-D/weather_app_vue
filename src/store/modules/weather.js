@@ -98,8 +98,8 @@ export default {
             ]);
         },
         CLEAR_WEATHER(state) {
-            state.dayliWeather = {};
-            state.currentWeatherSelective = [{}];
+            state.dayliWeather = null;
+            state.currentWeatherSelective = null;
         },
     },
 };

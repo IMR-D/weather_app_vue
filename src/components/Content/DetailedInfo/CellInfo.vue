@@ -14,7 +14,7 @@ getCurrentWeather - по нему определяем отображать ко
 -->
 <template>
   <div>
-    <div v-if="!!!getCurrentWeather" />
+    <div v-if="!getCurrentWeather" />
     <div v-else class="grid grid-cols-3 text-center  gap-y-8 mt-6 ">
       <div
         class=" grid  place-items-center "
