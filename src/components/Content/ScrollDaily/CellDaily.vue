@@ -7,40 +7,40 @@ timestamp -  необходим для того, чтобы конвертиро
 getWeatherDaily - определяет какой контент отображать
 -->
 <template>
-  <div>
+  <div >
     <div v-if="!dailyWeather" />
     <div
       v-else
-      class="grid grid-flow-col auto-cols-max overflow-x-auto gap-4  pl-5 "
+      class="flex flex-row overflow-x-auto gap-4 pl-5  "
     >
       <div
-        class=" myShadow w-24 h-28 grid grid-cols-2 place-items-center  mt-5 mb-10  rounded-2xl p-3"
+        class="myShadow mt-5 mb-10 rounded-2xl pl-6 pr-6 pb-6  pt-4"
         v-for="(value, index) in getWeatherDaily"
         :key="index"
       >
         <img
           :src="setImagePath(value.weather[0].description)"
           alt="description"
-          class="w-15 h-15 col-span-2 m-2 "
+          class="w-15 h-15 pb-2"
         />
 
-        <span class="col-span-2 text-base font-bold  ">
+        <span class="col-span-2 text-base font-bold ">
           {{ timestamp(value.dt) }}
         </span>
-
-      <div class="flex items-stretch place-self-end mr-1 self-start">
-        <span class="textColor ">
-          {{ Math.round(value.temp.max) }}&#xb0;C
-        </span>
-        <img class="inline p_temp_arrow" src="@/assets/img/arrow_up.svg" alt="arrow"/>
-      </div>
-        <div class="flex items-stretch place-self-start ml-1 self-start">
-          <span class="textColor">
-          {{ Math.round(value.temp.min) }}&#xb0;C
+      <div class="flex">
+        <div class="flex items-stretch mr-1 self-start">
+          <span class="textColor ">
+            {{ Math.round(value.temp.max) }}&#xb0;C
           </span>
-          <img class="inline p_temp_arrow" src="@/assets/img/arrow_down.svg" alt="arrow"/>
+          <img class="inline p_temp_arrow" src="@/assets/img/arrow_up.svg" alt="arrow"/>
         </div>
-
+          <div class="flex items-stretch ml-1 self-start">
+            <span class="textColor">
+            {{ Math.round(value.temp.min) }}&#xb0;C
+            </span>
+            <img class="inline p_temp_arrow" src="@/assets/img/arrow_down.svg" alt="arrow"/>
+          </div>
+      </div>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
   name: "CellDaily",
   computed: {
     ...mapGetters({
-      dailyWeather: "GET_DAYLI_WEATHER",
+      dailyWeather: "GET_DAILY_WEATHER",
     }),
     getWeatherDaily() {
       return this.dailyWeather.daily ? this.dailyWeather.daily.slice(1) : "";

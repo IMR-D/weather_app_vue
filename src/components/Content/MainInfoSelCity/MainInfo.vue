@@ -14,28 +14,27 @@ getCurrentTempMin- получает текующую погоду минимал
 
 <template>
   <div>
-    <div v-if="!getCurrentWeather" class="grid grid-col-3">
-      <div class="lds-dual-ring col-start-2 "/>
-
+    <div v-if="!getCurrentWeather" >
+      <div class="lds-dual-ring col-start-2"/>
     </div>
-    <div  v-else class="grid grid-cols-3 ">
-      <div class="grid  place-content-center justify-center text-center  ">
+    <div  v-else class="flex text-center items-center justify-between pl-12 pr-12 pb-2">
+      <div>
         <img
             :src="setImagePath(getCurrentWeather.description)"
             alt="description"
-            class=" w-10 h-10 place-self-center"
+            class="w-10 h-10"
         />
-        <p class="text-lg font-bold justify-center ">
+        <p class="text-lg font-bold">
           {{ getCurrentWeather.main }}
         </p>
       </div>
-      <span class="flex text-6xl font-thin place-self-center ">
+      <span class="flex text-6xl font-thin">
         {{ getCurrentTemp }}
-        <sup class="сelsius font-bold ">
+        <sup class="celsius font-bold">
           &#xb0;C
         </sup>
       </span>
-      <div class=" textColor grid place-content-center text-base text-right ">
+      <div class=" textColor  text-base text-right ">
         <div class="mb-1">
           <span> {{ getCurrentTempMax }}&#xb0;C </span>
          <img class="inline mb-2 " src="@/assets/img/arrow_up.svg" alt="arrow"/>
@@ -56,7 +55,7 @@ export default {
   name: "MainInfo",
   computed: {
     ...mapGetters({
-      currentWeather: "GET_DAYLI_WEATHER",
+      currentWeather: "GET_DAILY_WEATHER",
       localTime: "GET_LOCAL_TIME",
     }),
     getCurrentWeather() {
@@ -131,8 +130,9 @@ export default {
   }
 }
 
-.сelsius {
+.celsius {
   font-size: 24px;
   align-self: center;
+  color:  rgba(102, 102, 102, 1);
 }
 </style>

@@ -2,7 +2,7 @@
 Данный модуль отвечает за отображение погодных условий.
 
 Массив объектов currentWeatherSelective необходим для отображения дополнительной информации о погодных условиях в искомом городе. 
-Объект dayliWeather содержит полную информацию о погодных условиях города.
+Объект dailyWeather содержит полную информацию о погодных условиях города.
 key - ключ для доступа к API 
 
 Action FETCH_DAYLI_WEATHER получет данные о погодных условиях на 7 дней вперед ,а также настоящего времени.
@@ -19,12 +19,12 @@ import axios from "axios";
 export default {
     state: {
         currentWeatherSelective: [{}],
-        dayliWeather: {},
+        dailyWeather: {},
         key: "3a58dc3293b0300059e35bfce7c162e7",
     },
     getters: {
         GET_CURRENT_WEATHER_SELECTIVE: (state) => state.currentWeatherSelective,
-        GET_DAYLI_WEATHER: (state) => state.dayliWeather,
+        GET_DAILY_WEATHER: (state) => state.dailyWeather,
     },
     actions: {
         async FETCH_DAYLI_WEATHER({commit, state}, payload) {
@@ -66,7 +66,7 @@ export default {
             });
         },
         SET_DAILY_WEATHER(state, payload) {
-            return (state.dayliWeather = payload.data);
+            return (state.dailyWeather = payload.data);
         },
         SET_CURRENT_WEATHER_SELECTIVE(state, payload) {
             return (state.currentWeatherSelective = [
@@ -83,7 +83,7 @@ export default {
                 {
                     name: "Wind",
                     value: payload.data.current.wind_speed,
-                    measurement: "km/h",
+                    measurement: " km/h",
                 },
                 {
                     name: "Sunrise",
@@ -98,7 +98,7 @@ export default {
             ]);
         },
         CLEAR_WEATHER(state) {
-            state.dayliWeather = {};
+            state.dailyWeather = {};
             state.currentWeatherSelective = [{}];
         },
     },

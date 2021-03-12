@@ -18,7 +18,8 @@ export default {
             const start = DateTime.local();
             return state.local_time = {
                 full_time: start.toFormat("cccc, dd LLL yyyy hh:mma").toString(),
-                time_of_day: start.toFormat("a").toString(),
+                hour: start.toFormat("hh").toString(),
+                time_of_day:  start.toFormat("a").toString(),
             }
         },
     },

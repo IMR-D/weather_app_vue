@@ -12,10 +12,10 @@ error - ошибка в случае проблем с определением 
 -->
 
 <template>
-  <div class="flex bg-opacity-75 rounded-bl-3xl justify-center bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
+  <div class="flex flex-auto bg-opacity-75 rounded-bl-3xl justify-center bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
     <input
-      class="ml-6 text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate textColor text-center  text-blue-700 text-base
-    bg-opacity-0 placeholder-blue-400 placeholder-opacity-50"
+      class="textColor text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate  text-center  text-blue-700 text-base
+    bg-opacity-0 placeholder-blue-400 placeholder-opacity-50 ml-6 "
       type="text"
       :value="location.name"
       placeholder="Enter city"
@@ -43,8 +43,8 @@ export default {
   computed: {
     ...mapGetters({
       location: "GET_CURRENT_LOCATION",
-      currentWeather: "GET_CURRENT_WEATHER",
-      dailyWeather: "GET_DAYLI_WEATHER",
+      currentWeather: "GET_CURRENT_WEATHER_SELECTIVE",
+      dailyWeather: "GET_DAILY_WEATHER",
     }),
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
         lat: pos.coords.latitude,
         lon: pos.coords.longitude,
       };
-      this.dataGeolocation();
+      await this.dataGeolocation();
     },
     error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);

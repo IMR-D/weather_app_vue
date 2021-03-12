@@ -1,17 +1,19 @@
 <template>
-  <div class="grid grid-cols-1  relative">
-    <div>
-      <ThemeNight class="col-span-3 " v-if="localTime.time_of_day === 'AM'" />
-      <ThemeDay class="col-span-3" v-else />
+  <div class="flex flex-col">
+    <div class="bg-cover bg-center" >
+      <ThemeNight v-if="getLocalTime === 'night'" />
+      <ThemeDay  v-else  />
     </div>
-    <div class="grid grid-cols-6 myShadow rounded-t-3xl pos">
-      <LocalTime class="col-span-3 " />
-      <Search class="col-span-3 " />
-      <MainInfo class="col-span-6" />
-      <DetailedInfo class="col-span-6">
+    <div class="w-screen flex-col myShadow myPosition  bg-white rounded-t-3xl fixed bottom-0 ">
+      <div class="flex">
+        <LocalTime />
+        <Search />
+      </div>
+      <MainInfo  />
+      <DetailedInfo >
         <CellInfo />
       </DetailedInfo>
-      <ScrollDaily class="col-span-6">
+      <ScrollDaily >
         <CellDaily />
       </ScrollDaily>
     </div>
@@ -45,37 +47,20 @@ export default {
     ...mapGetters({
       localTime: "GET_LOCAL_TIME",
     }),
+    getLocalTime(){
+      if(this.localTime.time_of_day === "AM"){
+       return this.localTime.hour < 4 || this.localTime.hour == 12? "night" : "day";
+      }
+      else {
+        return this.localTime.hour < 4 || this.localTime.hour == 12? "day" : "night";
+      }
+    }
   },
 };
 </script>
 <style>
-.pos {
-  position: absolute;
-  background-color: white;
-  top: 279px;
-}
 .myShadow{
   box-shadow: 0px -16px 40px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 500px) and (min-width: 360px) {
-  .pos {
-    top: 290px;
-  }
-}
-@media (max-width: 640px) and (min-width: 501px) {
-  .pos {
-    top: 400px;
-  }
-}
-@media (max-width: 1024px) and (min-width: 640px) {
-  .pos {
-    top: 500px;
-  }
-}
-@media (max-width: 1960px) and (min-width: 1024px) {
-  .pos {
-    top: 520px;
-  }
-}
 </style>

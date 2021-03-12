@@ -15,18 +15,18 @@ getCurrentWeather - по нему определяем отображать ко
 <template>
   <div>
     <div v-if="!getCurrentWeather" />
-    <div v-else class="grid grid-cols-3 text-center  gap-y-8 mt-6 ">
+    <div v-else class="flex flex-row flex-wrap text-center ">
       <div
-        class=" grid  place-items-center "
-        v-for="(info, index) in currentWeatherSelecttve"
+        class="w-1/3 container "
+        v-for="(info, index) in currentWeatherSelective"
         :key="index"
       >
-        <img
-          class="w-6 h-6 m-2"
-          :src="setImagePath(info.name)"
-          :alt="info.name"
-        />
-        <span class="text-base font-bold">
+          <img
+            class="w-6 h-6 m-3 object-center"
+            :src="setImagePath(info.name)"
+            :alt="info.name"
+          />
+        <span class="block text-base font-bold">
           {{ filterValue({ value: info.value, info: info.name })
           }}{{ info.measurement }}
         </span>
@@ -42,11 +42,11 @@ export default {
   name: "CellInfo",
   computed: {
     ...mapGetters({
-      currentWeatherSelecttve: "GET_CURRENT_WEATHER_SELECTIVE",
-      dailyWheather: "GET_DAYLI_WEATHER",
+      currentWeatherSelective: "GET_CURRENT_WEATHER_SELECTIVE",
+      dailyWeather: "GET_DAILY_WEATHER",
     }),
     getCurrentWeather() {
-      return this.dailyWheather.current ? true : false;
+      return this.dailyWeather.current ? true : false;
     },
   },
   methods: {
@@ -82,5 +82,4 @@ export default {
 .text_desc{
   font-size: 8px;
 }
-
 </style>

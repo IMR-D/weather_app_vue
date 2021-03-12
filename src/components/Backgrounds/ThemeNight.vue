@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="@/assets/img/night/night.png" alt="night" />
+    <img  src="@/assets/img/night/night.svg" alt="night" />
   </div>
 </template>
 
@@ -10,4 +10,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
