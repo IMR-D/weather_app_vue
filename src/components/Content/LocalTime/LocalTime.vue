@@ -6,20 +6,21 @@ the_local_time -сторонняя бибилиотека Luxon позволяе
 -->
 
 <template>
-  <div class="textColor text-start text-sm  p-4 pl-6 font-normal">
+  <div class="text-color text-start text-sm  p-4 pl-6 font-normal">
     <span>
-      {{ localTime.full_time }}
+      {{ local_time.full_time }}
     </span>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
   name: "LocalTime",
   computed: {
     ...mapGetters({
-      localTime: "GET_LOCAL_TIME",
+      local_time: "local_time",
     }),
   },
 };
@@ -27,7 +28,7 @@ export default {
 
 
 <style scoped>
-.textColor{
+.text-color{
   color: rgba(153, 153, 153, 1);
 }
 </style>

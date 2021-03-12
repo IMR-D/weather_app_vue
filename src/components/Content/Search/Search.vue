@@ -5,7 +5,7 @@ requestWeather - запрос который делает пользовател
 в этом методе происходит поиск координат города по его названию и получение 
 погодных условий по найденным ранее координатам.
 
-dataGeolocation - позволяет найти город в котором находится клиент по геолокации
+dataGeocurrent_location - позволяет найти город в котором находится клиент по геолокации
 
 success - выполняет действия по определению местоположения 
 error - ошибка в случае проблем с определением местоположения 
@@ -14,20 +14,21 @@ error - ошибка в случае проблем с определением 
 <template>
   <div class="flex flex-auto bg-opacity-75 rounded-bl-3xl justify-center bg-blue-100  hover:bg-blue-200 w-46 h-12 ">
     <input
-      class="textColor text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate  text-center  text-blue-700 text-base
+        class="text-color text-center rounded-bl-3xl  bg-blue-700 hover:bg-blue-200 w-28 truncate  text-center  text-blue-700 text-base
     bg-opacity-0 placeholder-blue-400 placeholder-opacity-50 ml-6 "
-      type="text"
-      :value="location.name"
-      placeholder="Enter city"
-      @click="location.name = null"
-      @keyup.enter="(event) => requestWeather(event.target.value)"
+        type="text"
+        :value="current_location.name"
+        placeholder="Enter city"
+        @click="current_location.name = null"
+        @keyup.enter="(event) => requestWeather(event.target.value)"
     />
-    <img @click="getLocation" class="cursor-pointer p-4  " src="@/assets/img/location.svg" alt="location"/>
+    <img @click="getLocation" class="cursor-pointer p-4" src="@/assets/img/location.svg" alt="current_location"/>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "Search",
   data() {
@@ -42,25 +43,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      location: "GET_CURRENT_LOCATION",
-      currentWeather: "GET_CURRENT_WEATHER_SELECTIVE",
-      dailyWeather: "GET_DAILY_WEATHER",
+      current_location: "current_current_location",
+      current_weather_selective: "current_weather_selective",
+      daily_weather: "daily_weather",
     }),
   },
   methods: {
     ...mapActions({
-      fetchWeather: "FETCH_DAYLI_WEATHER",
-      fetchLocation: "FETCH_LAT_LON_CITY",
-      fetchNameCity: "FETCH_NAME_CITY",
-      fetchDayLength: "FETCH_DAY_LENGTH",
-      fetchLocalTime: "FETCH_LOCAL_TIME",
+      fetchDailyWeather: "fetchDailyWeather",
+      fetchLatLonCity: "fetchLatLonCity",
+      fetchNameCity: "fetchNameCity",
+      fetchDayLength: "fetchDayLength",
+      fetchLocalTime: "fetchLocalTime",
     }),
     async requestWeather(newCity) {
       try {
-        await this.fetchLocation(newCity);
-        await this.fetchWeather(this.location);
-        await this.fetchLocalTime(this.dailyWeather.timezone);
-        await this.fetchDayLength(this.location);
+        await this.fetchLatLonCity(newCity);
+        await this.fetchDailyWeather(this.current_location);
+        await this.fetchLocalTime(this.daily_weather.timezone);
+        await this.fetchDayLength(this.current_location);
       } catch (error) {
         console.log(error);
       }
@@ -68,8 +69,8 @@ export default {
     async dataGeolocation() {
       try {
         await this.fetchNameCity(this.position);
-        await this.fetchWeather(this.position);
-        await this.fetchLocalTime(this.dailyWeather.timezone);
+        await this.fetchDailyWeather(this.position);
+        await this.fetchLocalTime(this.daily_weather.timezone);
         await this.fetchDayLength(this.position);
       } catch (error) {
         console.log(error);
@@ -80,7 +81,11 @@ export default {
         lat: pos.coords.latitude,
         lon: pos.coords.longitude,
       };
-      await this.dataGeolocation();
+      try {
+        await this.dataGeolocation();
+      } catch (error) {
+        console.log(error);
+      }
     },
     error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -104,9 +109,9 @@ export default {
 </script>
 
 <style scoped>
-.textColor{
-  color:rgba(13, 160, 234, 1);
-  outline:none;
+.text-color {
+  color: rgba(13, 160, 234, 1);
+  outline: none;
   font-weight: 600;
 }
 

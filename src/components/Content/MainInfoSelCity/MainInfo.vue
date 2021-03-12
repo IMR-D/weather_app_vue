@@ -3,44 +3,44 @@
 Метод: 
 getIcon - Динамически вставляет изображение показывающее погоду по коду полученному из JSON.
 
-getCurrentWeather - получает текующую погоду
+current_weather_selective - получает текующую погоду
 
-getCurrentTemp - получает текующую погоду
+CurrentTemp - получает текующую погоду
 
-getCurrentTempMax - получает текующую погоду максимальную температуру
+CurrentTempMax - получает текующую погоду максимальную температуру
 
-getCurrentTempMin- получает текующую погоду минимальную температуру
+CurrentTempMin- получает текующую погоду минимальную температуру
 -->
 
 <template>
   <div>
-    <div v-if="!getCurrentWeather" >
-      <div class="lds-dual-ring col-start-2"/>
+    <div v-if="!current_weather_selective" class="flex justify-center h-auto ">
+      <div class=" lds-dual-ring "/>
     </div>
-    <div  v-else class="flex text-center items-center justify-between pl-12 pr-12 pb-2">
-      <div>
+    <div v-else class="flex text-center items-center  ">
+      <div class="w-1/3 container">
         <img
-            :src="setImagePath(getCurrentWeather.description)"
+            :src="setImagePath(currentWeatherSelective.description)"
             alt="description"
-            class="w-10 h-10"
+            class="w-full h-10"
         />
         <p class="text-lg font-bold">
-          {{ getCurrentWeather.main }}
+          {{ currentWeatherSelective.main }}
         </p>
       </div>
-      <span class="flex text-6xl font-thin">
-        {{ getCurrentTemp }}
+      <span class="w-1/3 justify-center flex text-6xl font-thin">
+        {{ currentTemp }}
         <sup class="celsius font-bold">
           &#xb0;C
         </sup>
       </span>
-      <div class=" textColor  text-base text-right ">
-        <div class="mb-1">
-          <span> {{ getCurrentTempMax }}&#xb0;C </span>
-         <img class="inline mb-2 " src="@/assets/img/arrow_up.svg" alt="arrow"/>
+      <div class="w-1/3 text-color text-base text-center">
+        <div class="mb-1 ">
+          <span> {{ currentTempMax }}&#xb0;C </span>
+          <img class="inline mb-2 " src="@/assets/img/arrow_up.svg" alt="arrow"/>
         </div>
         <div>
-          <span> {{ getCurrentTempMin }}&#xb0;C </span>
+          <span> {{ currentTempMin }}&#xb0;C </span>
           <img class="inline" src="@/assets/img/arrow_down.svg" alt="arrow"/>
         </div>
       </div>
@@ -55,27 +55,27 @@ export default {
   name: "MainInfo",
   computed: {
     ...mapGetters({
-      currentWeather: "GET_DAILY_WEATHER",
-      localTime: "GET_LOCAL_TIME",
+      current_weather_selective: "daily_weather",
+      localTime: "local_time",
     }),
-    getCurrentWeather() {
-      return this.currentWeather.current
-          ? this.currentWeather.current.weather[0]
+    currentWeatherSelective() {
+      return this.current_weather_selective.current
+          ? this.current_weather_selective.current.weather[0]
           : false;
     },
-    getCurrentTemp() {
-      return this.currentWeather.current
-          ? Math.round(this.currentWeather.current.temp)
+    currentTemp() {
+      return this.current_weather_selective.current
+          ? Math.round(this.current_weather_selective.current.temp)
           : false;
     },
-    getCurrentTempMax() {
-      return this.currentWeather.current
-          ? Math.round(this.currentWeather.daily[0].temp.max)
+    currentTempMax() {
+      return this.current_weather_selective.current
+          ? Math.round(this.current_weather_selective.daily[0].temp.max)
           : false;
     },
-    getCurrentTempMin() {
-      return this.currentWeather.current
-          ? Math.round(this.currentWeather.daily[0].temp.min)
+    currentTempMin() {
+      return this.current_weather_selective.current
+          ? Math.round(this.current_weather_selective.daily[0].temp.min)
           : false;
     },
   },
@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style scoped>
-.textColor {
+.text-color {
   color: rgba(102, 102, 102, 1);
 }
 
@@ -116,7 +116,7 @@ export default {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #cef;
+  border: 6px solid;
   border-color: #cef transparent #cef transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }

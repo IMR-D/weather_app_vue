@@ -1,14 +1,14 @@
 /*
 Данный модуль отвечает за отображение погодных условий.
 
-Массив объектов currentWeatherSelective необходим для отображения дополнительной информации о погодных условиях в искомом городе. 
-Объект dailyWeather содержит полную информацию о погодных условиях города.
+Массив объектов current_weather_selective необходим для отображения дополнительной информации о погодных условиях в искомом городе.
+Объект daily_weather содержит полную информацию о погодных условиях города.
 key - ключ для доступа к API 
 
-Action FETCH_DAYLI_WEATHER получет данные о погодных условиях на 7 дней вперед ,а также настоящего времени.
+Action fetchdaily_weather получет данные о погодных условиях на 7 дней вперед ,а также настоящего времени.
 
-Getter GET_CURRENT_WEATHER_SELECTIVE - получает дополнительную информацию о погоде 
-Getter GET_DAYLI_WEATHER - получает полную информацию о погоде
+Getter current_weather_selective - получает дополнительную информацию о погоде
+Getter daily_weather - получает полную информацию о погоде
 
 mutation SET_CURRENT_WEATHER_SELECTIVE - помещает необходимые выборочные данные в массив объектов 
 mutation SET_DAILY_WEATHER  - помещает полную информацию о погоде 
@@ -17,59 +17,28 @@ Mutation CLEAR_WEATHER - очищает полученные ранее данн
 import axios from "axios";
 
 export default {
+    // TODO DR: api key
     state: {
-        currentWeatherSelective: [{}],
-        dailyWeather: {},
-        key: "3a58dc3293b0300059e35bfce7c162e7",
+        current_weather_selective: [{}],
+        daily_weather: {},
     },
     getters: {
-        GET_CURRENT_WEATHER_SELECTIVE: (state) => state.currentWeatherSelective,
-        GET_DAILY_WEATHER: (state) => state.dailyWeather,
-    },
-    actions: {
-        async FETCH_DAYLI_WEATHER({commit, state}, payload) {
-            await axios
-                .get(
-                    `https://api.openweathermap.org/data/2.5/onecall?lat=${payload.lat}&lon=${payload.lon}&lang=en&appid=${state.key}&units=metric`
-                )
-                .then((response) => {
-                    commit("SET_DAILY_WEATHER", response);
-                    commit("SET_CURRENT_WEATHER_SELECTIVE", response);
-                })
-                .catch((error) => {
-                    console.error(
-                        "Не удалось найти город по полученным координатам",
-                        error
-                    );
-                    commit("CLEAR_WEATHER");
-                });
-        },
-        async FETCH_DAY_LENGTH({commit}, payload) {
-            await axios
-                .get(
-                    `https://api.sunrise-sunset.org/json?lat=${payload.lat}&lng=${payload.lon}&date=today`
-                )
-                .then((response) => {
-                    commit("SET_DAY_LENGTH", response.data.results);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+        current_weather_selective: (state) => state.current_weather_selective,
+        daily_weather: (state) => state.daily_weather,
     },
     mutations: {
         SET_DAY_LENGTH(state, payload) {
-            return state.currentWeatherSelective.push({
+            return state.current_weather_selective.push({
                 name: "Daytime",
                 value: payload.day_length,
                 measurement: "",
             });
         },
         SET_DAILY_WEATHER(state, payload) {
-            return (state.dailyWeather = payload.data);
+            return (state.daily_weather = payload.data);
         },
         SET_CURRENT_WEATHER_SELECTIVE(state, payload) {
-            return (state.currentWeatherSelective = [
+            return (state.current_weather_selective = [
                 {
                     name: "Humidity",
                     value: payload.data.current.humidity,
@@ -98,8 +67,49 @@ export default {
             ]);
         },
         CLEAR_WEATHER(state) {
-            state.dailyWeather = {};
-            state.currentWeatherSelective = [{}];
+            state.daily_weather = {};
+            state.current_weather_selective = [{}];
+        },
+    },
+    actions: {
+        async fetchDailyWeather({commit}, payload) {
+            try {
+                const res = await axios.get(
+                    `https://api.openweathermap.org/data/2.5/onecall`, {
+                        params: {
+                            lat: payload.lat,
+                            lon: payload.lon,
+                            lang: "en",
+                            appid: process.env.VUE_APP_WEATHER_API_KEY,
+                            units: "metric",
+                        }
+                    }
+                );
+                commit("SET_DAILY_WEATHER", res);
+                commit("SET_CURRENT_WEATHER_SELECTIVE", res);
+            } catch (e) {
+                console.error(
+                    "Could not find the city using the coordinates received.",
+                    e
+                );
+                commit("CLEAR_WEATHER");
+                throw e;
+            }
+        },
+        async fetchDayLength({commit}, payload) {
+            try {
+                const res = await axios.get(`https://api.sunrise-sunset.org/json`, {
+                    params: {
+                        lat: payload.lat,
+                        lng: payload.lon,
+                        date: "today"
+                    }
+                });
+                commit("SET_DAY_LENGTH", res.data.results);
+            } catch (e) {
+                console.log(e);
+                throw e;
+            }
         },
     },
 };

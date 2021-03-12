@@ -9,49 +9,49 @@ timestamp - необходим для того, чтобы конвертиро�
 
 setImagePath - получает путь к фотографиии
 
-getCurrentWeather - по нему определяем отображать контент или нет.
+current_weather_selective - по нему определяем отображать контент или нет.
 
 -->
 <template>
   <div>
-    <div v-if="!getCurrentWeather" />
-    <div v-else class="flex flex-row flex-wrap text-center ">
+    <div v-if="!currentWeatherSelective" />
+    <div v-else class="flex flex-row flex-wrap justify-between text-center ">
       <div
-        class="w-1/3 container "
-        v-for="(info, index) in currentWeatherSelective"
-        :key="index"
+          class="w-1/3 container pt-4 pb-2 "
+          v-for="(info, index) in current_weather_selective"
+          :key="index"
       >
-          <img
-            class="w-6 h-6 m-3 object-center"
+        <img
+            class="w-full h-10  object-none object-center"
             :src="setImagePath(info.name)"
             :alt="info.name"
-          />
-        <span class="block text-base font-bold">
-          {{ filterValue({ value: info.value, info: info.name })
-          }}{{ info.measurement }}
+        />
+        <span class=" text-base font-bold">
+          {{ filterValue({value: info.value, info: info.name}) }}{{ info.measurement }}
         </span>
-        <span class="text-gray-700 text_desc font-medium">{{ info.name }}</span>
+        <span class="block text-gray-700 text-description font-medium ">{{ info.name }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
   name: "CellInfo",
   computed: {
     ...mapGetters({
-      currentWeatherSelective: "GET_CURRENT_WEATHER_SELECTIVE",
-      dailyWeather: "GET_DAILY_WEATHER",
+      current_weather_selective: "current_weather_selective",
+      daily_weather: "daily_weather",
     }),
-    getCurrentWeather() {
-      return this.dailyWeather.current ? true : false;
+    currentWeatherSelective() {
+      return this.daily_weather.current ? true : null;
     },
   },
   methods: {
     filterValue({ value, info }) {
-      if (info == "Pressure") {
+      if (info === "Pressure") {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
       else if (value && value.toString().length >= 5) {
@@ -61,7 +61,7 @@ export default {
 
     timestamp({ value, info }) {
       //Приводим время к виду 11h 21m (Example)
-       if (info == "Daytime") {
+       if (info === "Daytime") {
         value = value.split(":").slice(0, 2);
         return `${value[0]}h ${value[1]}m `;
       }
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style scoped>
-.text_desc{
+.text-description {
   font-size: 8px;
 }
 </style>

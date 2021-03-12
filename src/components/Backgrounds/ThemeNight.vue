@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img  src="@/assets/img/night/night.svg" alt="night" />
+    <img class="my-background" src="@/assets/img/night/night.svg" alt="night"/>
   </div>
 </template>
 
@@ -11,5 +11,9 @@ export default {
 </script>
 
 <style scoped>
-
+.my-background {
+  object-fit: cover;
+  height: 50vh;
+  width: 100%;
+}
 </style>

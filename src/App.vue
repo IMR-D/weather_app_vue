@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Weather from "@/components/pages/Weather";
+import Weather from "@/views/Weather";
 
 export default {
   name: "App",
